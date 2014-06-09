@@ -48,11 +48,13 @@ def get_posts(settings):
     frontpage.make_links_absolute(GOOGLE_GROUP_BASE)
     html_threads = frontpage.xpath('//div[@class="GIEUOX-DEQ"]')
     threads = (thread_to_dict(thread) for thread in html_threads)
-    return [thread for thread in threads if thread['month'] >= 5]
+    return [
+        thread for thread in threads if thread['month'] >= settings['month']]
 
 
 def score(post):
     return post['seen'] + post['posts']
+
 
 def curate(posts, count=3):
     active = [post for post in posts if score(post) > 1]
