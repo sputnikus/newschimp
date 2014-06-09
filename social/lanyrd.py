@@ -8,7 +8,7 @@ import click
 import requests as req
 from lxml.html import fromstring
 
-from utils import load_settings
+from ..utils import load_settings
 
 LANYRD_BASE = 'http://lanyrd.com/'
 LANYRD_URL = LANYRD_BASE + 'search/?q={}'

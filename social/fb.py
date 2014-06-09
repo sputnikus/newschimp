@@ -6,7 +6,7 @@ from pprint import pprint
 import click
 import requests as req
 
-from utils import load_settings
+from ..utils import load_settings
 
 FACEBOOK_TOKEN = os.environ.get('FACEBOOK_TOKEN')
 FACEBOOK_GROUP_URL = 'https://graph.facebook.com/v2.0/{}/feed'

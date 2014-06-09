@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import locale
 import time
 from datetime import date
 from pprint import pprint
@@ -9,7 +8,7 @@ import click
 from lxml.html import fromstring
 from selenium import webdriver
 
-from utils import load_settings, CZ_MONTHS
+from ..utils import load_settings, CZ_MONTHS
 
 GOOGLE_GROUP_BASE = 'https://groups.google.com/forum/'
 GOOGLE_GROUP_URL = GOOGLE_GROUP_BASE + '#!forum/{}'
