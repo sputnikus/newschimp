@@ -53,7 +53,6 @@ def get_posts(settings, group):
     browser.set_window_size(1024, 768)
     browser.get(group_url)
     time.sleep(5)
-    browser.save_screenshot('screen.png')
     frontpage = fromstring(browser.page_source)
     browser.quit()
     frontpage.make_links_absolute(GOOGLE_GROUP_BASE)
@@ -83,7 +82,6 @@ def curate(posts, count=3):
 @click.pass_context
 def cli(ctx, group):
     """Google Groups curator"""
-    print(ctx.obj)
     monthly_posts = get_posts(ctx.obj['SETTINGS'], group)
     best_posts = curate(monthly_posts)
     for post in best_posts:
