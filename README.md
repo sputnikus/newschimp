@@ -60,6 +60,11 @@ Default config file is ```./config.yaml```. Here's minimalistic setting:
         name: 
 ```
 
+You also need to setup environment variables (for automatic campaign creation):
+
+    - ```FACEBOOK_TOKEN```
+    - ```MAILCHIMP_KEY```
+
 ## Requirements
 
 Python 3 and stuff in ```requirements.txt```
