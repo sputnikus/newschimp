@@ -5,7 +5,7 @@ import os
 import click
 import mailchimp
 
-from utils import load_settings
+from cli import cli
 
 
 def new_campaign(api, settings):
@@ -24,19 +24,18 @@ def new_campaign(api, settings):
             'html': html_file.read(),
             'text': text_file.read(),
         })
-    if resp['status'] = 'error':
+    if resp['status'] == 'error':
+        # TODO: Logging
         print('Something is terribly wrong')
         print(resp['code'], ' ', resp['error'])
     text_file.close()
     html_file.close()
 
 
-@click.command()
-@click.option('--config', help='Custom config file')
-@click.option('--key', help='Mailchimp API key')
-@click.option('--html', help='HTML file for campaign')
-def main(config, key):
-    settings = load_settings(config)
-    api = mailchimp.Mailchimp(
-        key if key else os.environ.get('MAILCHIMP_KEY'))
-    new_campaign(api, settings)
+@cli.command(short_help='Campaign creation')
+@click.option('--key', help='Mailchimp API key', envvar='MAILCHIMP_KEY')
+# @click.option('--html', help='HTML file for campaign')
+@click.pass_context
+def cli(ctx, html, key):
+    api = mailchimp.Mailchimp(key)
+    new_campaign(api, ctx.obj['SETTINGS'])

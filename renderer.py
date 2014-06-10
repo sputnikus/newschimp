@@ -7,12 +7,17 @@ from lxml.html import fromstring
 from jinja2 import Environment, FileSystemLoader
 from typogrify.filters import typogrify
 
-from utils import load_settings
+from cli import cli
 
 
-def render(settings):
+def render_files(settings, template):
     env = Environment(loader=FileSystemLoader(os.path.dirname(__file__)))
     context = {k.upper(): v for k, v in settings['context'].items()}
+    try:
+        used_template = template if template else settings['template']
+    except KeyError:
+        print('Some error shit') # TODO: Logging
+        sys.exit()
     html_output = env.get_template(settings['template']).render(**context)
     text_output = fromstring(html_output).text_content()
     typo_output = typogrify(html_output)
@@ -26,15 +31,8 @@ def render(settings):
         print(text_output)
 
 
-@click.command()
-@click.option('--config', help='Custom config file')
+@cli.command(short_help='HTML and text email rendering')
 @click.option('--template', help='Template file')
-def main(config, template):
-    settings = load_settings(config)
-    if template:
-        settings['template'] = template
-    render(settings)
-
-
-if __name__ == '__main__':
-    main()
+@click.pass_context
+def cli(ctx, template):
+    render_files(ctx.obj['SETTINGS'], template)

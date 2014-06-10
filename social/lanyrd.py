@@ -8,8 +8,6 @@ import click
 import requests as req
 from lxml.html import fromstring
 
-from ..utils import load_settings
-
 LANYRD_BASE = 'http://lanyrd.com/'
 LANYRD_URL = LANYRD_BASE + 'search/?q={}'
 
@@ -56,14 +54,9 @@ def meetup_loop(settings):
     return results
 
 
-@click.command()
-@click.option('--config', help='Custom config file')
-def main(config):
-    settings = load_settings(config)
-    meetups = meetup_loop(settings)
+@click.command(short_help='Meetup listing')
+@click.pass_context
+def cli(ctx):
+    meetups = meetup_loop(ctx.obj['SETTINGS'])
     for meetup in meetups:
         pprint(meetup)
-
-
-if __name__ == '__main__':
-    main()
