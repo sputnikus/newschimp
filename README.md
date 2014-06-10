@@ -62,8 +62,8 @@ Default config file is ```./config.yaml```. Here's minimalistic setting:
 
 You also need to setup environment variables (for automatic campaign creation):
 
-    - ```FACEBOOK_TOKEN```
-    - ```MAILCHIMP_KEY```
+- ```FACEBOOK_TOKEN```
+- ```MAILCHIMP_KEY```
 
 ## Requirements
 
@@ -75,7 +75,7 @@ See LICENSE file
 
 ## TODO
 
-    - Logging (in combination with Click)
-    - Newsletter creation wizard
-    - Support of more social sources
-    - Better config structure
+- Logging (in combination with Click)
+- Newsletter creation wizard
+- Support of more social sources
+- Better config structure
