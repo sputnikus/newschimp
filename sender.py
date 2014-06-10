@@ -13,7 +13,7 @@ def new_campaign(settings, key):
     text_file = open(settings['text_output'], 'r')
     html_file = open(settings['html_output'], 'r')
     resp = api.campaigns.create(
-        'auto',
+        'regular',
         {
             'list_id': settings['mail_list'],
             'subject': settings['subject'],
