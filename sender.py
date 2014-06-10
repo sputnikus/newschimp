@@ -8,7 +8,8 @@ import mailchimp
 from cli import cli_group
 
 
-def new_campaign(api, settings):
+def new_campaign(settings, key):
+    api = mailchimp.Mailchimp(key)
     text_file = open(settings['text_output'], 'r')
     html_file = open(settings['html_output'], 'r')
     resp = api.campaigns.create(
@@ -34,8 +35,6 @@ def new_campaign(api, settings):
 
 @cli_group.command(short_help='Campaign creation')
 @click.option('--key', help='Mailchimp API key', envvar='MAILCHIMP_KEY')
-# @click.option('--html', help='HTML file for campaign')
 @click.pass_context
-def cli(ctx, html, key):
-    api = mailchimp.Mailchimp(key)
-    new_campaign(api, ctx.obj['SETTINGS'])
+def cli(ctx, key):
+    new_campaign(ctx.obj['SETTINGS'], key)
