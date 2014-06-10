@@ -32,6 +32,7 @@ def load_settings(config_file):
         settings = yaml.load(config)
         return settings
 
+
 cmd_folder = os.path.abspath(os.path.join(os.path.dirname(__file__),
                                           'social'))
 root_folder = os.path.abspath(os.path.dirname(__file__))

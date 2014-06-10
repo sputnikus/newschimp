@@ -6,5 +6,5 @@ from utils import load_settings
 
 @click.group()
 @click.pass_context
-def cli(ctx):
+def cli_group(ctx):
     """Group collector"""

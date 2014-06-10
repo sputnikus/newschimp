@@ -9,8 +9,6 @@ import click
 from lxml.html import fromstring
 from selenium import webdriver
 
-#from ..utils import CZ_MONTHS
-
 CZ_MONTHS = {
     'března': 3,
     'dubna': 4,

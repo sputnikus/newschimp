@@ -5,7 +5,7 @@ import os
 import click
 import mailchimp
 
-from cli import cli
+from cli import cli_group
 
 
 def new_campaign(api, settings):
@@ -32,7 +32,7 @@ def new_campaign(api, settings):
     html_file.close()
 
 
-@cli.command(short_help='Campaign creation')
+@cli_group.command(short_help='Campaign creation')
 @click.option('--key', help='Mailchimp API key', envvar='MAILCHIMP_KEY')
 # @click.option('--html', help='HTML file for campaign')
 @click.pass_context

@@ -7,7 +7,7 @@ from lxml.html import fromstring
 from jinja2 import Environment, FileSystemLoader
 from typogrify.filters import typogrify
 
-from cli import cli
+from cli import cli_group 
 
 
 def render_files(settings, template):
@@ -31,8 +31,9 @@ def render_files(settings, template):
         print(text_output)
 
 
-@cli.command(short_help='HTML and text email rendering')
-@click.option('--template', help='Template file')
+@cli_group.command(short_help='HTML and text email rendering')
+@click.option('--template', help='Template file', type=click.Path(
+    exists=True, file_okay=True, resolve_path=True))
 @click.pass_context
 def cli(ctx, template):
     render_files(ctx.obj['SETTINGS'], template)

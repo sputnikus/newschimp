@@ -5,7 +5,7 @@ import click
 import renderer
 import sender
 from social import fb, gg, lanyrd
-from cli import cli
+from cli import cli_group
 from utils import ComplexCLI, load_settings
 
 
@@ -13,11 +13,11 @@ def create_newsletter(settings):
     pass
 
 
-cli.add_command(fb.cli)
-cli.add_command(gg.cli)
-cli.add_command(lanyrd.cli)
+cli_group.add_command(fb.cli)
+cli_group.add_command(gg.cli)
+cli_group.add_command(lanyrd.cli)
 
-@cli.command(cls=ComplexCLI, invoke_without_command=True)
+@cli_group.command(cls=ComplexCLI, invoke_without_command=True)
 @click.option('--config', help='Custom config file', type=click.Path(
     exists=True, file_okay=True, resolve_path=True), default='config.yaml')
 @click.pass_context
