@@ -35,7 +35,8 @@ cli_group.add_command(lanyrd.cli)
 @click.pass_context
 def main(ctx, config):
     ctx.obj['SETTINGS'] = load_settings(config)
-    create_newsletter(ctx.obj['SETTINGS'])
+    if ctx.invoked_subcommand is None:
+        create_newsletter(ctx.obj['SETTINGS'])
 
 
 if __name__ == '__main__':
