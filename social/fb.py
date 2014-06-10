@@ -11,10 +11,8 @@ FACEBOOK_GROUP_URL = 'https://graph.facebook.com/v2.0/{}/feed'
 
 
 def get_posts(settings, token, group):
-    if not token:
-        token = FACEBOOK_TOKEN
     try:
-        group_id = group if group else settings['group_id']
+        group_id = group if group else settings['facebook_group_id']
     except KeyError:
         print('Some error shit') # TODO: Logging
         sys.exit()
@@ -48,15 +46,15 @@ def curate(posts, count=5):
     active = [post for post in posts if score(post) > 1]
     best = sorted(active, key=lambda post: score(post))[-count:]
     for post in best:
-        summary = [
-            post['actions'][0]['link'],
-            post['from']['name'],
-        ]
+        summary = {
+            'fb_url': post['actions'][0]['link'],
+            'from': post['from']['name'],
+        }
         if 'message' in post:
-            summary.append(post['message'])
+            summary['message'] = post['message']
         if 'link' in post:
-            summary.append(post['name'])
-            summary.append(post['link'])
+            summary['link_name'] = post['name']
+            summary['link_url'] = post['link']
         yield summary
 
 

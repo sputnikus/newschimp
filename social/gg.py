@@ -70,10 +70,10 @@ def curate(posts, count=3):
     active = [post for post in posts if score(post) > 1]
     best = sorted(active, key=lambda post: score(post))[-count:]
     for post in best:
-        summary = [
-            post['name'],
-            post['url'],
-        ]
+        summary = {
+            'name': post['name'],
+            'url': post['url'],
+        }
         yield summary
 
 
