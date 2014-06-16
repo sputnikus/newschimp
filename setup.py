@@ -3,6 +3,7 @@ from setuptools import setup
 
 setup(
     name='NewsChimp',
+    packages=['newschimp'],
     version='0.1',
     description='Newsletter generator for MailChimp',
     author='Martin Putniorz',
