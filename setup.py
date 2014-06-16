@@ -17,7 +17,10 @@ setup(
         'Programming Language :: Python :: 3',
         'Topic :: Communications :: Email',
     ],
-    scripts=['bin/chimpgen'],
+    entry_points='''
+        [console_scripts]
+        newschimp=newschimp.core:main
+    ''',
     license='BSD',
     keywords = ['newsletter', 'mail', 'mailchimp']
 )
