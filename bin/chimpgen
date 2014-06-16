@@ -1,7 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import os, sys
+
+try:
+    import _loader
+except ImportError:
+    sys.exc_clear()
+
+sys.path.insert(0, os.path.abspath(os.getcwd()))
 
 from newschimp.newschimp import main
-
-if __name__ == '__main__':
-    main(obj={})
+main(obj={})
