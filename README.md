@@ -80,3 +80,4 @@ See LICENSE file
 - Support of more social sources
 - Better config structure
 - Setup
+
