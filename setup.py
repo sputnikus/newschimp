@@ -18,6 +18,6 @@ setup(
         'Topic :: Communications :: Email',
     ],
     long_description=open('README.md').read(),
-    scripts=['bin/newschimp']
-    license='LICENSE',
+    scripts=['bin/newschimp'],
+    license='BSD',
 )
