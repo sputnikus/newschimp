@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import logging
 import time
 import sys
 from datetime import date
@@ -17,6 +18,7 @@ CZ_MONTHS = {
 }
 GOOGLE_GROUP_BASE = 'https://groups.google.com/forum/'
 GOOGLE_GROUP_URL = GOOGLE_GROUP_BASE + '#!forum/{}'
+LOGGER = logging.getLogger(__name__)
 
 
 def date_parse(raw_date):
@@ -44,7 +46,7 @@ def get_posts(settings, group):
     try:
         group_id = group if group else settings['google_group_name']
     except KeyError:
-        print('Some error shit') # TODO: Logging
+        LOGGER.error('Google Group name not defined')
         sys.exit()
     group_url = GOOGLE_GROUP_URL.format(group_id)
     browser = webdriver.PhantomJS()

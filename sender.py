@@ -1,11 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import logging
 import os
 
 import click
 import mailchimp
 
 from cli import cli_group
+
+LOGGER = logging.getLogger(__name__)
 
 
 def new_campaign(settings, key):
@@ -26,9 +29,8 @@ def new_campaign(settings, key):
             'text': text_file.read(),
         })
     if resp['status'] == 'error':
-        # TODO: Logging
-        print('Something is terribly wrong')
-        print(resp['code'], ' ', resp['error'])
+        LOGGER.error('MailChimp API error: ')
+        LOGGER.error(' '.join((resp['code'], resp['error'])))
     text_file.close()
     html_file.close()
 

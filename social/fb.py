@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import logging
 import os
 import sys
 from pprint import pprint
@@ -8,13 +9,14 @@ import click
 import requests as req
 
 FACEBOOK_GROUP_URL = 'https://graph.facebook.com/v2.0/{}/feed'
+LOGGER = logging.getLogger(__name__)
 
 
 def get_posts(settings, token, group):
     try:
         group_id = group if group else settings['facebook_group_id']
     except KeyError:
-        print('Some error shit') # TODO: Logging
+        LOGGER.error('Facebook Group id not defined')
         sys.exit()
     group_uri = FACEBOOK_GROUP_URL.format(group_id)
     payload = {
@@ -26,7 +28,8 @@ def get_posts(settings, token, group):
     try:
         return posts.json()['data']
     except KeyError:
-        print(posts.json()['error'])
+        LOGGER.error('Facebook API error:')
+        LOGGER.error(posts.json()['error'])
         sys.exit()
 
 
