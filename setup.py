@@ -17,7 +17,7 @@ setup(
         'Programming Language :: Python :: 3',
         'Topic :: Communications :: Email',
     ],
-    long_description=open('README.md').read(),
     scripts=['bin/newschimp'],
     license='BSD',
+    keywords = ['newsletter', 'mail', 'mailchimp']
 )
