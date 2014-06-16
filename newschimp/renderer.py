@@ -9,7 +9,7 @@ from lxml.html import fromstring
 from jinja2 import Environment, FileSystemLoader
 from typogrify.filters import typogrify
 
-from cli import cli_group
+from .cli import cli_group
 
 LOGGER = logging.getLogger(__name__)
 

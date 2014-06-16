@@ -6,7 +6,7 @@ import os
 import click
 import mailchimp
 
-from cli import cli_group
+from .cli import cli_group
 
 LOGGER = logging.getLogger(__name__)
 

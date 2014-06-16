@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import click
-from utils import load_settings
+from .utils import load_settings
 
 
 @click.group()

@@ -4,11 +4,10 @@ import os
 
 import click
 
-import renderer
-import sender
-from social import fb, gg, lanyrd
-from cli import cli_group
-from utils import ComplexCLI, load_settings
+from newschimp import renderer, sender
+from newschimp.social import fb, gg, lanyrd
+from newschimp.cli import cli_group
+from newschimp.utils import ComplexCLI, load_settings
 
 
 def create_newsletter(settings):
