@@ -15,7 +15,7 @@ CZ_MONTHS = {
     'června': 6,
 }
 
-UTIL_FILES = ('__init__.py', 'utils.py', 'cli.py', 'newschimp.py')
+UTIL_FILES = ('__init__.py', 'utils.py', 'cli.py', 'core.py')
 
 
 def readable(file_name):
@@ -52,12 +52,12 @@ class ComplexCLI(click.MultiCommand):
 
     def get_command(self, ctx, name):
         try:
-            mod = __import__('social.' + name, None, None, ['cli'])
+            mod = __import__('newschimp.social.' + name, None, None, ['cli'])
             return mod.cli
         except ImportError:
             pass
         try:
-            mod = __import__(name, None, None, ['cli'])
+            mod = __import__('newschimp.' + name, None, None, ['cli'])
         except ImportError:
             return
         return mod.cli
