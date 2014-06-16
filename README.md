@@ -79,3 +79,5 @@ See LICENSE file
 - Newsletter creation wizard
 - Support of more social sources
 - Better config structure
+- Setup
+

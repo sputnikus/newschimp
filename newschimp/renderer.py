@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import logging
 import os
 import sys
 
@@ -8,7 +9,9 @@ from lxml.html import fromstring
 from jinja2 import Environment, FileSystemLoader
 from typogrify.filters import typogrify
 
-from cli import cli_group 
+from cli import cli_group
+
+LOGGER = logging.getLogger(__name__)
 
 
 def render_files(settings, template, context={}):
@@ -16,12 +19,12 @@ def render_files(settings, template, context={}):
     if 'context' in settings:
         settings['context'].update(context)
     else:
-        settings['context'] = context 
+        settings['context'] = context
     full_context = {k.upper(): v for k, v in settings['context'].items()}
     try:
         used_template = template if template else settings['template']
     except KeyError:
-        print('Some error shit') # TODO: Logging
+        LOGGER.error('No template defined')
         sys.exit()
     html_output = env.get_template(settings['template']).render(**full_context)
     text_output = fromstring(html_output).text_content()
