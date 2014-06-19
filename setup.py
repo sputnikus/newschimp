@@ -4,7 +4,7 @@ from setuptools import setup
 setup(
     name='NewsChimp',
     packages=['newschimp', 'newschimp.social'],
-    version='0.1.2',
+    version='0.1.3',
     description='Newsletter generator for MailChimp',
     long_description=open('README.rst').read(),
     author='Martin Putniorz',
