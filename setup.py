@@ -1,12 +1,15 @@
 #!/usr/bin/env python
 from setuptools import setup
 
+with open('README.rst') as f:
+    readme = f.read()
+
 setup(
     name='NewsChimp',
     packages=['newschimp', 'newschimp.social'],
     version='0.1.3',
     description='Newsletter generator for MailChimp',
-    long_description=open('README.rst').read(),
+    long_description=readme,
     author='Martin Putniorz',
     author_email='mputniorz@gmail.cpm',
     url='https://github.com/sputnikus/newschimp',
