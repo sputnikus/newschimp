@@ -15,8 +15,8 @@ Usage
 
 .. code-block:: bash
 
-    $ python3 newschimp.py --help
-    Usage: newschimp.py [OPTIONS] COMMAND [ARGS]...
+    $ chimpgen --help
+    Usage: chimpgen [OPTIONS] COMMAND [ARGS]...
 
     Options:
     --config PATH  Custom config file
@@ -33,7 +33,7 @@ If you want to use subcommand with config, do it in format
 
 .. code-block:: bash
 
-    $ python3 newschimp.py --config PATH command
+    $ chimpgen --config PATH command
 
 
 Config
