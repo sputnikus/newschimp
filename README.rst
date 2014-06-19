@@ -1,14 +1,20 @@
-# NewsChimp
+NewsChimp
+=========
 
 Generator of monthly newsletter campaigns on MailChimp. Based od laziness and boredom.
 
-## Status
+
+Status
+------
 
 In heavy development. Please touch anything important for fun.
 
-## Usage
 
-```ShellSession
+Usage
+-----
+
+.. code-block:: bash
+
     $ python3 newschimp.py --help
     Usage: newschimp.py [OPTIONS] COMMAND [ARGS]...
 
@@ -22,62 +28,66 @@ In heavy development. Please touch anything important for fun.
     lanyrd    Meetup listing
     renderer  HTML and text email rendering
     sender    Campaign creation
-```
 
 If you want to use subcommand with config, do it in format
 
-```ShellSession
+.. code-block:: bash
+
     $ python3 newschimp.py --config PATH command
-```
 
-## Config
 
-Default config file is ```./config.yaml```. Here's minimalistic setting:
+Config
+------
 
-```YAML
-    month: 
-    facebook_group_id: 
+Default config file is ``./config.yaml``. Here's minimalistic setting:
+
+.. code-block:: yaml
+    month:
+    facebook_group_id:
     # Oldest facebook post epoch time
-    since: 
+    since:
     google_group_name:
     # Events for lanyrd to search
     events:
-        - 
-    # Input template 
-    template: 
+        -
+    # Input template
+    template:
     context:
         # Additional template context
         header:
     # Template outputs
-    html_output: 
+    html_output:
     text_output:
     # MailChimp settings
     mail_list:
-    subject: 
-    reciever: 
+    subject:
+    reciever:
     sender:
-        email: 
-        name: 
-```
+        email:
+        name:
 
 You also need to setup environment variables (for automatic campaign creation):
 
-- ```FACEBOOK_TOKEN```
-- ```MAILCHIMP_KEY```
+- ``FACEBOOK_TOKEN``
+- ``MAILCHIMP_KEY``
 
-## Requirements
 
-Python 3 and stuff in ```requirements.txt```
+Requirements
+------------
 
-## License
+Python 3 and stuff in ``requirements.txt``
+
+
+License
+-------
 
 See LICENSE file
 
-## TODO
 
-- Logging (in combination with Click)
+TODO
+----
+
 - Newsletter creation wizard
 - Support of more social sources
 - Better config structure
-- Setup
 
