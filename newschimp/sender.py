@@ -13,16 +13,17 @@ LOGGER = logging.getLogger(__name__)
 
 def new_campaign(settings, key):
     api = mailchimp.Mailchimp(key)
-    text_file = open(settings['text_output'], 'r')
-    html_file = open(settings['html_output'], 'r')
+    text_file = open(settings['output']['text'], 'r')
+    html_file = open(settings['output']['html'], 'r')
+    chimp_settings = settings['mailchimp']
     resp = api.campaigns.create(
         'regular',
         {
-            'list_id': settings['mail_list'],
-            'subject': settings['subject'],
-            'from_email': settings['sender']['email'],
-            'from_name': settings['sender']['name'],
-            'to_name': settings['reciever'],
+            'list_id': chimp_settings['list'],
+            'subject': chimp_settings['subject'],
+            'from_email': chimp_settings['sender']['email'],
+            'from_name': chimp_settings['sender']['name'],
+            'to_name': chimp_settings['reciever'],
         },
         {
             'html': html_file.read(),

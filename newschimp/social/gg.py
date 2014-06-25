@@ -44,7 +44,7 @@ def thread_to_dict(thread):
 
 def get_posts(settings, group):
     try:
-        group_id = group if group else settings['google_group_name']
+        group_id = group if group else settings['google']['group_name']
     except KeyError:
         LOGGER.error('Google Group name not defined')
         sys.exit()

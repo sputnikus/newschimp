@@ -15,25 +15,26 @@ LOGGER = logging.getLogger(__name__)
 
 
 def render_files(settings, template, context={}):
-    env = Environment(loader=FileSystemLoader(os.path.dirname(__file__)))
-    if 'context' in settings:
-        settings['context'].update(context)
-    else:
-        settings['context'] = context
-    full_context = {k.upper(): v for k, v in settings['context'].items()}
     try:
         used_template = template if template else settings['template']
     except KeyError:
         LOGGER.error('No template defined')
         sys.exit()
+    env = Environment(loader=FileSystemLoader(os.getcwd()))
+    if 'context' in settings:
+        settings['context'].update(context)
+    else:
+        settings['context'] = context
+    full_context = {k.upper(): v for k, v in settings['context'].items()}
     html_output = env.get_template(settings['template']).render(**full_context)
     text_output = fromstring(html_output).text_content()
     typo_output = typogrify(html_output)
-    if settings.get('html_output'):
-        with open(settings['html_output'], 'w') as html:
+    output_files = settings['output']
+    if output_files.get('html'):
+        with open(output_files.get('html'), 'w') as html:
             html.write(typo_output)
-        if settings.get('text_output'):
-            with open(settings['text_output'], 'w') as text:
+        if output_files.get('text'):
+            with open(output_files.get('text'), 'w') as text:
                 text.write(text_output)
     else:
         print(text_output)

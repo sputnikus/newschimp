@@ -3,6 +3,8 @@
 import logging
 import os
 import sys
+import time
+from datetime import datetime
 from pprint import pprint
 
 import click
@@ -14,15 +16,19 @@ LOGGER = logging.getLogger(__name__)
 
 def get_posts(settings, token, group):
     try:
-        group_id = group if group else settings['facebook_group_id']
+        group_id = group if group else settings['facebook']['group_id']
     except KeyError:
         LOGGER.error('Facebook Group id not defined')
         sys.exit()
     group_uri = FACEBOOK_GROUP_URL.format(group_id)
+    epoch_since = time.mktime(datetime(
+        datetime.now().year,
+        settings['month'],
+        1).timetuple())
     payload = {
         'limit': 10000,
         'access_token': token,
-        'since': settings['since']
+        'since': epoch_since,
     }
     posts = req.get(group_uri, params=payload)
     try:
@@ -56,8 +62,11 @@ def curate(posts, count=5):
         if 'message' in post:
             summary['message'] = post['message']
         if 'link' in post:
-            summary['link_name'] = post['name']
-            summary['link_url'] = post['link']
+            try:
+                summary['link_name'] = post['name']
+                summary['link_url'] = post['link']
+            except KeyError:
+                summary['message'] = post['message']
         yield summary
 
 

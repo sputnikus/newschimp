@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import logging
 import os
+import sys
 
 import click
 
@@ -9,11 +11,17 @@ from newschimp.social import fb, gg, lanyrd
 from newschimp.cli import cli_group
 from newschimp.utils import ComplexCLI, load_settings
 
+LOGGER = logging.getLogger(__name__)
+
 
 def create_newsletter(settings):
     """Newsletter creation based on config and env variables"""
     context = {}
-    fb_posts = fb.get_posts(settings, os.environ.get('FACEBOOK_TOKEN'), None)
+    try:
+        fb_posts = fb.get_posts(settings, os.environ['FACEBOOK_TOKEN'], None)
+    except KeyError:
+        LOGGER.error('Facebook Token not defined')
+        sys.exit()
     context['fb'] = fb.curate(fb_posts)
     ggroup_posts = gg.get_posts(settings, None)
     context['gg'] = gg.curate(ggroup_posts)
