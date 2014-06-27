@@ -7,7 +7,7 @@ with open('README.rst') as f:
 setup(
     name='NewsChimp',
     packages=['newschimp', 'newschimp.social'],
-    version='0.1.3',
+    version='0.1.4',
     description='Newsletter generator for MailChimp',
     long_description=readme,
     author='Martin Putniorz',
