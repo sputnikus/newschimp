@@ -7,14 +7,6 @@ import yaml
 
 # TODO: Logging
 
-# TODO: The fuck
-CZ_MONTHS = {
-    'března': 3,
-    'dubna': 4,
-    'května': 5,
-    'června': 6,
-}
-
 UTIL_FILES = ('__init__.py', 'utils.py', 'cli.py', 'core.py')
 
 
@@ -33,6 +25,7 @@ def load_settings(config_file):
         return settings
 
 
+# TODO: Autodiscovery
 cmd_folder = os.path.abspath(os.path.join(os.path.dirname(__file__),
                                           'social'))
 root_folder = os.path.abspath(os.path.dirname(__file__))

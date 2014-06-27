@@ -1,5 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+'''
+    newschimp.social.gg
+    ~~~~~~~~~~~~~~~~~~~
+
+    Google Group curator
+
+    :author: Martin Putniorz
+    :year: 2014
+'''
+import gettext
 import logging
 import time
 import sys
@@ -7,14 +17,26 @@ from datetime import date
 from pprint import pprint
 
 import click
+from lxml import etree
 from lxml.html import fromstring
 from selenium import webdriver
 
-CZ_MONTHS = {
-    'března': 3,
-    'dubna': 4,
-    'května': 5,
-    'června': 6,
+t = gettext.translation('gg', 'locale')
+_ = t.gettext
+
+MONTHS = {
+    _('january'): 1,
+    _('february'): 2,
+    _('march'): 3,
+    _('april'): 4,
+    _('may'): 5,
+    _('june'): 6,
+    _('july'): 7,
+    _('august'): 8,
+    _('september'): 9,
+    _('october'): 10,
+    _('november'): 11,
+    _('december'): 12,
 }
 GOOGLE_GROUP_BASE = 'https://groups.google.com/forum/'
 GOOGLE_GROUP_URL = GOOGLE_GROUP_BASE + '#!forum/{}'
@@ -22,27 +44,30 @@ LOGGER = logging.getLogger(__name__)
 
 
 def date_parse(raw_date):
+    '''Make some sense for default Group datetime string'''
     tokens = raw_date.split()
     day = int(tokens[1].strip('.'))
-    month = CZ_MONTHS[tokens[2]]
+    month = MONTHS[tokens[2]]
     year = int(tokens[3])
     return date(year, month, day)
 
 
 def thread_to_dict(thread):
-    parsed = {'name': thread.xpath('.//a[@class="GIEUOX-DPL"]')[0].text}
-    parsed['url'] = thread.xpath('.//a[@class="GIEUOX-DPL"]')[0].attrib['href']
-    raw_last_change = thread.xpath('.//span[@class="GIEUOX-DOQ"]/span'
+    '''Serialize Group thread into Python dictionary'''
+    parsed = {'name': thread.xpath('.//a')[0].text}
+    parsed['url'] = thread.xpath('.//a')[0].attrib['href']
+    raw_last_change = thread.xpath('.//span[@title]'
         )[0].attrib['title']
     last_change = date_parse(raw_last_change)
     parsed['month'] = last_change.month
-    info = thread.xpath('.//span[@class="GIEUOX-DOQ"]')
-    parsed['seen'] = int(info[1].text.split()[0])
-    parsed['posts'] = int(info[0].text.split()[0])
+    info = thread.xpath('.//div[contains(@style,"right")]')[0]
+    parsed['seen'] = int(info.xpath('.//span[@class]')[3].text.split()[0])
+    parsed['posts'] = int(info.xpath('.//span[@class]')[4].text.split()[0])
     return parsed
 
 
 def get_posts(settings, group):
+    '''Gets Group posts using PhantomJS and lxml'''
     try:
         group_id = group if group else settings['google']['group_name']
     except KeyError:
@@ -56,10 +81,10 @@ def get_posts(settings, group):
     frontpage = fromstring(browser.page_source)
     browser.quit()
     frontpage.make_links_absolute(GOOGLE_GROUP_BASE)
-    html_threads = frontpage.xpath('//div[@class="GIEUOX-DEQ"]')
+    html_threads = frontpage.xpath('//div[@role="listitem"]')
     threads = (thread_to_dict(thread) for thread in html_threads)
     return [
-        thread for thread in threads if thread['month'] >= settings['month']]
+        thrd for thrd in threads if thrd['month'] >= settings['month']]
 
 
 def score(post):
@@ -81,7 +106,7 @@ def curate(posts, count=3):
 @click.option('--group', help='Group ID')
 @click.pass_context
 def cli(ctx, group):
-    """Google Groups curator"""
+    '''Google Groups curator'''
     monthly_posts = get_posts(ctx.obj['SETTINGS'], group)
     best_posts = curate(monthly_posts)
     for post in best_posts:
