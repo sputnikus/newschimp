@@ -21,7 +21,7 @@ from lxml import etree
 from lxml.html import fromstring
 from selenium import webdriver
 
-t = gettext.translation('gg', 'locale')
+t = gettext.translation('gg', 'locale', fallback=True)
 _ = t.gettext
 
 MONTHS = {
