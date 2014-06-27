@@ -43,10 +43,10 @@ Default config file is ``./config.yaml``. Here's minimalistic setting:
 
 .. code-block:: yaml
     month:
-    facebook_group_id:
-    # Oldest facebook post epoch time
-    since:
-    google_group_name:
+    facebook:
+        group_id:
+    google:
+        group_name:
     # Events for lanyrd to search
     events:
         -
@@ -56,15 +56,17 @@ Default config file is ``./config.yaml``. Here's minimalistic setting:
         # Additional template context
         header:
     # Template outputs
-    html_output:
-    text_output:
+    output:
+        text:
+        html:
     # MailChimp settings
-    mail_list:
-    subject:
-    reciever:
-    sender:
-        email:
-        name:
+    mailchimp:
+        list:
+        subject:
+        reciever:
+        sender:
+            email:
+            name:
 
 You also need to setup environment variables (for automatic campaign creation):
 
